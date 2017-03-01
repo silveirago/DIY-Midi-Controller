@@ -4,7 +4,9 @@ Este projeto tem como objetivo permitir que artistas, e hobbystas em geral, poss
 
 O "Fazendo Msica com Arduino" é um projeto idealizado por Gustavo Silveira. Acesse o site para mais tutoriais relacionados a mais nerdices musicais!
 
-wwwmusiconerd.com
+www.musiconerd.com
+
+Conheça o curso completo do FMcA >> http://www.musiconerd.com/curso-completo-b <<
 
 *English
 
