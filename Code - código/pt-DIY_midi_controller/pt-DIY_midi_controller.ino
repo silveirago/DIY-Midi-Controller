@@ -11,8 +11,8 @@ MIDI_CREATE_DEFAULT_INSTANCE();
 
 /////////////////////////////////////////////
 
-const int NButtons = 4; // *coloque aqui o numero de entradas digitais utilizadas 
-const int button[NButtons] = {2, 3, 4, 5}; // *neste array coloque na ordem desejada os pinos das portas digitais utilizadas
+const int NButtons = 12; // *coloque aqui o numero de entradas digitais utilizadas 
+const int button[NButtons] = {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13}; // *neste array coloque na ordem desejada os pinos das portas digitais utilizadas
 int buttonCState[NButtons] = {0}; // estado atual da porta digital
 int buttonPState[NButtons] = {0}; // estado previo da porta digital
 
@@ -27,7 +27,8 @@ int potVar = 0; // variacao entre o valor do estado previo e o atual da porta an
 /////////////////////////////////////////////
 
 byte midiCh = 1; // *Canal midi a ser utilizado
-byte note = 36; // *Nota mais grave que sera utilizada
+byte note = 36; // *Nota mais grave que sera utilizada - use essa linha se quiser usar uma escala cromatica
+// byte notes[NButtons] = {36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47}; // use essa linha se quiser usar uma escala personalizada
 byte cc = 1; // *CC mais baixo que sera utilizado
 
 /////////////////////////////////////////////
@@ -75,10 +76,12 @@ void loop () {
 
       if(buttonCState[i] == LOW) {     
         MIDI.sendNoteOn(note+i, 127, midiCh); // envia NoteOn(nota, velocity, canal midi)
+        // MIDI.sendNoteOn(note[i], 127, midiCh); // use esta se quiser uma escala personalizada
         buttonPState[i] = buttonCState[i];
       }
       else {
-        MIDI.sendNoteOn(note+i, 0, midiCh);
+        MIDI.sendNoteOn(note+i, 0, midiCh); // use esta se quiser uma escala cromatica
+        // MIDI.sendNoteOn(note[i], 0, midiCh); // use esta se quiser uma escala personalizada
         buttonPState[i] = buttonCState[i];
       }
     }
