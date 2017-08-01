@@ -67,7 +67,7 @@ void loop () {
   for (int i=0; i<NButtons; i++) {
     buttonCState[i] = digitalRead(button[i]);
   }
- // buttonCState[3] = !buttonCState[3]; // Inverte o valor do pino 13
+  buttonCState[12] = !buttonCState[12]; // Inverte o valor do pino 13
 
   //Le o estado dos botoes e manda NoteOns para cada um que estiver ativo
   for (int i=0; i<NButtons; i++) {
