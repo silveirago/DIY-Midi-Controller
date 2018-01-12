@@ -11,12 +11,12 @@
 */
 
 
-// Uncomment if using with ATmega328 - Uno, Mega, Nano...
-//#include <MIDI.h>
-//MIDI_CREATE_DEFAULT_INSTANCE();
+// Use if using with ATmega328 - Uno, Mega, Nano...
+#include <MIDI.h>
+MIDI_CREATE_DEFAULT_INSTANCE();
 
-// Uncomment if using with ATmega32U4 - Micro, Pro Micro, Leonardo...
-#include "MIDIUSB.h"
+// Use if using with ATmega32U4 - Micro, Pro Micro, Leonardo...
+//#include "MIDIUSB.h"
 
 /////////////////////////////////////////////
 // buttons
@@ -33,7 +33,6 @@ unsigned long debounceDelay = 5;    //* the debounce time; increase if the outpu
 
 /////////////////////////////////////////////
 // potentiometers
-
 const int NPots = 2; //*
 int potPin[NPots] = {A0, A1}; //* Pin where the potentiometer is
 int potCState[NPots] = {0}; // Current state of the pot
@@ -94,22 +93,22 @@ void buttons() {
 
         if (buttonCState[i] == LOW) {
           // use if using with ATmega328 (uno, mega, nano...)
-          //MIDI.sendNoteOn(note + i, 127, midiCh); // note, velocity, channel
+          MIDI.sendNoteOn(note + i, 127, midiCh); // note, velocity, channel
 
           // use if using with ATmega32U4 (micro, pro micro, leonardo...)
-          noteOn(midiCh, note + i, 127);  // channel, note, velocity
-          MidiUSB.flush();
+          //          noteOn(midiCh, note + i, 127);  // channel, note, velocity
+          //          MidiUSB.flush();
 
           //          Serial.print("button on  >> ");
           //          Serial.println(i);
         }
         else {
           // use if using with ATmega328 (uno, mega, nano...)
-          //MIDI.sendNoteOn(note + i, 0, midiCh); // note, velocity, channel
+          MIDI.sendNoteOn(note + i, 0, midiCh); // note, velocity, channel
 
           // use if using with ATmega32U4 (micro, pro micro, leonardo...)
-          noteOn(midiCh, note + i, 0);  // channel, note, velocity
-          MidiUSB.flush();
+          //          noteOn(midiCh, note + i, 0);  // channel, note, velocity
+          //          MidiUSB.flush();
 
           //          Serial.print("button off >> ");
           //          Serial.println(i);
@@ -149,11 +148,11 @@ void potentiometers() {
       if (midiPState[i] != midiCState[i]) {
 
         // use if using with ATmega328 (uno, mega, nano...)
-        //MIDI.sendControlChange(cc+i, midiCState[i], midiCh);
+        MIDI.sendControlChange(cc + i, midiCState[i], midiCh); // cc number, cc value, midi channel
 
         // use if using with ATmega32U4 (micro, pro micro, leonardo...)
-        controlChange(midiCh, cc + i, midiCState[i]); // manda control change (channel, CC, value)
-        MidiUSB.flush();
+        //        controlChange(midiCh, cc + i, midiCState[i]); //  (channel, CC number,  CC value)
+        //        MidiUSB.flush();
 
 
         //Serial.println(midiCState);
@@ -165,21 +164,24 @@ void potentiometers() {
 
 }
 
-/////////////////////////////////////////////
-// Arduino (pro)micro midi functions MIDIUSB Library
-void noteOn(byte channel, byte pitch, byte velocity) {
+// use if using with ATmega32U4 (micro, pro micro, leonardo...)
+/*
+  /////////////////////////////////////////////
+  // Arduino (pro)micro midi functions MIDIUSB Library
+  void noteOn(byte channel, byte pitch, byte velocity) {
   midiEventPacket_t noteOn = {0x09, 0x90 | channel, pitch, velocity};
   MidiUSB.sendMIDI(noteOn);
-}
+  }
 
-void noteOff(byte channel, byte pitch, byte velocity) {
+  void noteOff(byte channel, byte pitch, byte velocity) {
   midiEventPacket_t noteOff = {0x08, 0x80 | channel, pitch, velocity};
   MidiUSB.sendMIDI(noteOff);
-}
+  }
 
-void controlChange(byte channel, byte control, byte value) {
+  void controlChange(byte channel, byte control, byte value) {
   midiEventPacket_t event = {0x0B, 0xB0 | channel, control, value};
   MidiUSB.sendMIDI(event);
-}
+  }
+*/
 
 
