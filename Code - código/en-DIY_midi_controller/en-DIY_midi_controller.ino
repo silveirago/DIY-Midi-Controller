@@ -12,8 +12,8 @@
 
 
 // Use if using with ATmega328 - Uno, Mega, Nano...
-#include <MIDI.h>
-MIDI_CREATE_DEFAULT_INSTANCE();
+//#include <MIDI.h>
+//MIDI_CREATE_DEFAULT_INSTANCE();
 
 // Use if using with ATmega32U4 - Micro, Pro Micro, Leonardo...
 //#include "MIDIUSB.h"
@@ -93,6 +93,7 @@ void buttons() {
 
         if (buttonCState[i] == LOW) {
           // use if using with ATmega328 (uno, mega, nano...)
+          //do usbMIDI.sendNoteOn if using with Teensy
           MIDI.sendNoteOn(note + i, 127, midiCh); // note, velocity, channel
 
           // use if using with ATmega32U4 (micro, pro micro, leonardo...)
@@ -104,6 +105,7 @@ void buttons() {
         }
         else {
           // use if using with ATmega328 (uno, mega, nano...)
+          //do usbMIDI.sendNoteOn if using with Teensy
           MIDI.sendNoteOn(note + i, 0, midiCh); // note, velocity, channel
 
           // use if using with ATmega32U4 (micro, pro micro, leonardo...)
@@ -148,6 +150,7 @@ void potentiometers() {
       if (midiPState[i] != midiCState[i]) {
 
         // use if using with ATmega328 (uno, mega, nano...)
+        //do usbMIDI.sendControlChange if using with Teensy
         MIDI.sendControlChange(cc + i, midiCState[i], midiCh); // cc number, cc value, midi channel
 
         // use if using with ATmega32U4 (micro, pro micro, leonardo...)
