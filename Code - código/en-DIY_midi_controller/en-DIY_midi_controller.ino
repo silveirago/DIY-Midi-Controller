@@ -12,16 +12,16 @@
 
 
 // Use if using with ATmega328 - Uno, Mega, Nano...
-//#include <MIDI.h>
-//MIDI_CREATE_DEFAULT_INSTANCE();
+#include <MIDI.h>
+MIDI_CREATE_DEFAULT_INSTANCE();
 
 // Use if using with ATmega32U4 - Micro, Pro Micro, Leonardo...
 //#include "MIDIUSB.h"
 
 /////////////////////////////////////////////
 // buttons
-const int NButtons = 2; //*
-const int buttonPin[NButtons] = {2, 3}; //* the number of the pushbutton pins in the desired not order
+const int NButtons = 2; //* The number of buttons
+const int buttonPin[NButtons] = {3,4}; //* the number of the pushbutton pins in the desired order
 int buttonCState[NButtons] = {0};         // stores the button current value
 int buttonPState[NButtons] = {0};        // stores the button previous value
 //byte pin13index = 3; // put the index of the pin 13 in the buttonPin[] if you are using it, if not, comment lines 68-70
@@ -51,12 +51,12 @@ unsigned long timer[NPots] = {0}; // Stores the time that has elapsed since the 
 /////////////////////////////////////////////
 
 byte midiCh = 1; //* MIDI channel to be used
-byte note = 36; //* Lowest note to be used
-byte cc = 1; //* Lowest MIDI CC to be used
+byte note = 24; //* Lowest note to be used
+byte cc = 11; //* Lowest MIDI CC to be used
 
 void setup() {
 
-  //Serial.begin(115200); // use if using with ATmega328 (uno, mega, nano...)
+  Serial.begin(31250); // use if using with ATmega328 (uno, mega, nano...)
 
   for (int i = 0; i < NButtons; i++) {
     pinMode(buttonPin[i], INPUT_PULLUP);
