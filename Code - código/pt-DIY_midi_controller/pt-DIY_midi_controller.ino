@@ -71,8 +71,8 @@ int potVar = 0; // variacao entre o valor do estado previo e o atual da porta an
 int midiCState[NPots] = {0}; // Estado atual do valor midi
 int midiPState[NPots] = {0}; // Estado anterior do valor midi
 
-int TIMEOUT = 300; //quantidade de tempo em que o potenciometro sera lido apos ultrapassar o varThreshold
-int varThreshold = 4; //threshold para a variacao no sinal do potenciometro
+int TIMEOUT = 300; // quantidade de tempo em que o potenciometro sera lido apos ultrapassar o varThreshold
+int varThreshold = 4; // threshold para a variacao no sinal do potenciometro
 boolean potMoving = true; // se o potenciometro esta se movendo
 unsigned long pTime[NPots] = {0}; // tempo armazenado anteriormente
 unsigned long timer[NPots] = {0}; // armazena o tempo que passou desde que o timer foi zerado
