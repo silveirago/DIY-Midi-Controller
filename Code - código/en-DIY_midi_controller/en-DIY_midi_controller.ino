@@ -2,9 +2,6 @@
   Made by Gustavo Silveira, 2019.
   - This Sketch reads the Arduino's digital and analog ports and send midi notes and midi control change
 
-  Want to learn how to code and understand other people's codes?
-  Check our Making Music with Arduino course: http://www.musiconerd.com/making-music-with-arduino
-
   http://www.musiconerd.com
   http://www.youtube.com/musiconerd
   http://facebook.com/musiconerdmusiconerd
@@ -12,7 +9,7 @@
   http://www.gustavosilveira.net
   gustavosilveira@musiconerd.com
 
-  If you are using it for anything that's not for personal use don't forget to give credit.
+  If you are using for anything that's not for personal use don't forget to give credit.
 
   PS: Just change the value that has a comment like " //* "
 
@@ -36,7 +33,7 @@
 // if using with ATmega328 - Uno, Mega, Nano...
 #ifdef ATMEGA328
 #include <MIDI.h>
-MIDI_CREATE_DEFAULT_INSTANCE();
+//MIDI_CREATE_DEFAULT_INSTANCE();
 
 // if using with ATmega32U4 - Micro, Pro Micro, Leonardo...
 #elif ATMEGA32U4
@@ -47,46 +44,49 @@ MIDI_CREATE_DEFAULT_INSTANCE();
 
 /////////////////////////////////////////////
 // BUTTONS
-const int NButtons = 12; //* The number of buttons
-const int buttonPin[NButtons] = {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13}; //* the number of the pushbutton pins in the desired order
-int buttonCState[NButtons] = {0};         // stores the button current value
-int buttonPState[NButtons] = {0};        // stores the button previous value
+const int N_BUTTONS = 3; //*  total numbers of buttons
+const int BUTTON_ARDUINO_PIN[N_BUTTONS] = {2, 3, 4}; //* pins of each button connected straight to the Arduino
 
-#define pin13 1 // uncomment if you are using the pin 13 (the pin with led), or comment the line if not
-byte pin13index = 12; //* put the index of the pin 13 of the buttonPin[] array if you are using it, if not, comment it
+int buttonCState[N_BUTTONS] = {};        // stores the button current value
+int buttonPState[N_BUTTONS] = {};        // stores the button previous value
+
+//#define pin13 1 //* uncomment if you are using pin 13 (pin with led), or comment the line if not using
+byte pin13index = 12; //* put the index of the pin 13 of the buttonPin[] array if you are using, if not, comment
 
 // debounce
-unsigned long lastDebounceTime[NButtons] = {0};  // the last time the output pin was toggled
+unsigned long lastDebounceTime[N_BUTTONS] = {0};  // the last time the output pin was toggled
 unsigned long debounceDelay = 5;    //* the debounce time; increase if the output flickers
 
 /////////////////////////////////////////////
 // POTENTIOMETERS
-const int NPots = 6; //*
-int potPin[NPots] = {A0, A1, A2, A3, A4, A5}; //* Pin where the potentiometer is
-int potCState[NPots] = {0}; // Current state of the pot
-int potPState[NPots] = {0}; // Previous state of the pot
+const int N_POTS = 2; //* total numbers of pots (slide & rotary)
+const int POT_ARDUINO_PIN[N_POTS] = {A1, A0}; //* pins of each pot connected straight to the Arduino
+
+int potCState[N_POTS] = {0}; // Current state of the pot
+int potPState[N_POTS] = {0}; // Previous state of the pot
 int potVar = 0; // Difference between the current and previous state of the pot
 
-int midiCState[NPots] = {0}; // Current state of the midi value
-int midiPState[NPots] = {0}; // Previous state of the midi value
+int midiCState[N_POTS] = {0}; // Current state of the midi value
+int midiPState[N_POTS] = {0}; // Previous state of the midi value
 
-int TIMEOUT = 300; //* Amount of time the potentiometer will be read after it exceeds the varThreshold
-int varThreshold = 10; //* Threshold for the potentiometer signal variation
+const int TIMEOUT = 300; //* Amount of time the potentiometer will be read after it exceeds the varThreshold
+const int varThreshold = 10; //* Threshold for the potentiometer signal variation
 boolean potMoving = true; // If the potentiometer is moving
-unsigned long PTime[NPots] = {0}; // Previously stored time
-unsigned long timer[NPots] = {0}; // Stores the time that has elapsed since the timer was reset
+unsigned long PTime[N_POTS] = {0}; // Previously stored time
+unsigned long timer[N_POTS] = {0}; // Stores the time that has elapsed since the timer was reset
 
 /////////////////////////////////////////////
-
+// MIDI
 byte midiCh = 1; //* MIDI channel to be used
-byte note = 24; //* Lowest note to be used
-// byte notes[NButtons] = {36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47}; // Use if you want to use a custom scale
-byte cc = 11; //* Lowest MIDI CC to be used
+byte note = 36; //* Lowest note to be used
+byte cc = 1; //* Lowest MIDI CC to be used
 
+/////////////////////////////////////////////
+// SETUP
 void setup() {
 
   // Baud Rate
-  // use if using with ATmega328 (uno, mega, nano...) or to debug
+  // use if using with ATmega328 (uno, mega, nano...)
   // 31250 for MIDI class compliant | 115200 for Hairless MIDI
   Serial.begin(115200); //*
 
@@ -97,16 +97,18 @@ Serial.println();
 
   // Buttons
   // Initialize buttons with pull up resistors
-  for (int i = 0; i < NButtons; i++) {
-    pinMode(buttonPin[i], INPUT_PULLUP);
+  for (int i = 0; i < N_BUTTONS; i++) {
+    pinMode(BUTTON_ARDUINO_PIN[i], INPUT_PULLUP);
   }
 
-#ifdef pin13 // initialize pin 13 as an input
-pinMode(buttonPin[pin13index], INPUT);
+#ifdef pin13 // inicializa o pino 13 como uma entrada
+pinMode(BUTTON_ARDUINO_PIN[pin13index], INPUT);
 #endif
 
 }
 
+/////////////////////////////////////////////
+// LOOP
 void loop() {
 
   buttons();
@@ -118,13 +120,13 @@ void loop() {
 // BUTTONS
 void buttons() {
 
-  for (int i = 0; i < NButtons; i++) {
+  for (int i = 0; i < N_BUTTONS; i++) {
 
-    buttonCState[i] = digitalRead(buttonPin[i]);
+    buttonCState[i] = digitalRead(BUTTON_ARDUINO_PIN[i]);  // read pins from arduino
 
 #ifdef pin13
 if (i == pin13index) {
-buttonCState[i] = !buttonCState[i]; // inverts pin 13 because it has a pull down resistor instead of a pull up
+buttonCState[i] = !buttonCState[i]; // inverts the pin 13 because it has a pull down resistor instead of a pull up
 }
 #endif
 
@@ -137,16 +139,16 @@ buttonCState[i] = !buttonCState[i]; // inverts pin 13 because it has a pull down
 
           // Sends the MIDI note ON accordingly to the chosen board
 #ifdef ATMEGA328
-// ATmega328 (uno, mega, nano...)
+// use if using with ATmega328 (uno, mega, nano...)
 MIDI.sendNoteOn(note + i, 127, midiCh); // note, velocity, channel
 
 #elif ATMEGA32U4
-// ATmega32U4 (micro, pro micro, leonardo...)
+// use if using with ATmega32U4 (micro, pro micro, leonardo...)
 noteOn(midiCh, note + i, 127);  // channel, note, velocity
 MidiUSB.flush();
 
 #elif TEENSY
-// Teensy
+//do usbMIDI.sendNoteOn if using with Teensy
 usbMIDI.sendNoteOn(note + i, 127, midiCh); // note, velocity, channel
 
 #elif DEBUG
@@ -159,16 +161,16 @@ Serial.println(": button on");
 
           // Sends the MIDI note OFF accordingly to the chosen board
 #ifdef ATMEGA328
-// ATmega328 (uno, mega, nano...)
+// use if using with ATmega328 (uno, mega, nano...)
 MIDI.sendNoteOn(note + i, 0, midiCh); // note, velocity, channel
 
 #elif ATMEGA32U4
-// ATmega32U4 (micro, pro micro, leonardo...)
+// use if using with ATmega32U4 (micro, pro micro, leonardo...)
 noteOn(midiCh, note + i, 0);  // channel, note, velocity
 MidiUSB.flush();
 
 #elif TEENSY
-// Teensy
+//do usbMIDI.sendNoteOn if using with Teensy
 usbMIDI.sendNoteOn(note + i, 0, midiCh); // note, velocity, channel
 
 #elif DEBUG
@@ -187,11 +189,12 @@ Serial.println(": button off");
 // POTENTIOMETERS
 void potentiometers() {
 
-  for (int i = 0; i < NPots; i++) { // Loops through all the potentiometers
 
-    potCState[i] = analogRead(potPin[i]); // Reads the pot and stores it in the potCState variable
+  for (int i = 0; i < N_POTS; i++) { // Loops through all the potentiometers
+
+    potCState[i] = analogRead(POT_ARDUINO_PIN[i]); // reads the pins from arduino
+
     midiCState[i] = map(potCState[i], 0, 1023, 0, 127); // Maps the reading of the potCState to a value usable in midi
-
 
     potVar = abs(potCState[i] - potPState[i]); // Calculates the absolute value between the difference between the current and previous state of the pot
 
@@ -238,7 +241,6 @@ Serial.println(midiCState[i]);
       }
     }
   }
-
 }
 
 /////////////////////////////////////////////
@@ -260,5 +262,4 @@ void controlChange(byte channel, byte control, byte value) {
   midiEventPacket_t event = {0x0B, 0xB0 | channel, control, value};
   MidiUSB.sendMIDI(event);
 }
-
 #endif
