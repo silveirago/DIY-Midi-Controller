@@ -44,8 +44,8 @@
 
 /////////////////////////////////////////////
 // BUTTONS
-const int N_BUTTONS = 3; //*  total numbers of buttons
-const int BUTTON_ARDUINO_PIN[N_BUTTONS] = {2, 3, 4}; //* pins of each button connected straight to the Arduino
+const int N_BUTTONS = 2; //*  total numbers of buttons
+const int BUTTON_ARDUINO_PIN[N_BUTTONS] = {2, 3}; //* pins of each button connected straight to the Arduino
 
 int buttonCState[N_BUTTONS] = {};        // stores the button current value
 int buttonPState[N_BUTTONS] = {};        // stores the button previous value
@@ -78,7 +78,7 @@ unsigned long timer[N_POTS] = {0}; // Stores the time that has elapsed since the
 /////////////////////////////////////////////
 // MIDI
 byte midiCh = 1; //* MIDI channel to be used
-byte note = 36; //* Lowest note to be used
+byte note = 1; //* Lowest note to be used
 byte cc = 1; //* Lowest MIDI CC to be used
 
 /////////////////////////////////////////////
@@ -88,7 +88,7 @@ void setup() {
   // Baud Rate
   // use if using with ATmega328 (uno, mega, nano...)
   // 31250 for MIDI class compliant | 115200 for Hairless MIDI
-  Serial.begin(115200); //*
+  Serial.begin(31250); //*
 
 #ifdef DEBUG
 Serial.println("Debug mode");

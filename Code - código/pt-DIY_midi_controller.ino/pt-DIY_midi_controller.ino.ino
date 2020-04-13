@@ -26,7 +26,7 @@
 // "ATMEGA32U4" se estiver usando com o ATmega32U4 - Micro, Pro Micro, Leonardo ...
 // "TEENSY" se estiver usando uma placa Teensy
 // "DEBUG" se você quer apenas debugar o código no monitor serial
-// você não precisa comentar ou descomentar qualquer biblioteca MIDI abaixo depois de definir sua placa
+// você não precisa comentar ou descomentar qualquer biblioteca MIDI abaixo depois de definir sua placa 
 
 #define ATMEGA328 1 //* coloque aqui o uC que você está usando, como nas linhas acima seguidas de "1", como "ATMEGA328 1", "DEBUG 1", etc.
 
@@ -37,7 +37,7 @@
 // se estiver usando com ATmega328 - Uno, Mega, Nano ...
 #ifdef ATMEGA328
 #include <MIDI.h>
-MIDI_CREATE_DEFAULT_INSTANCE();
+// MIDI_CREATE_DEFAULT_INSTANCE();
 
 // se estiver usando com ATmega32U4 - Micro, Pro Micro, Leonardo ...
 #elif ATMEGA32U4
@@ -48,8 +48,8 @@ MIDI_CREATE_DEFAULT_INSTANCE();
 
 /////////////////////////////////////////////
 // BOTOES
-const int N_BUTTONS = 1; //*  número total de botões
-const int BUTTON_ARDUINO_PIN[N_BUTTONS] = {7}; //* pinos de cada botão conectado diretamente ao Arduino
+const int N_BUTTONS = 2; //*  número total de botões
+const int BUTTON_ARDUINO_PIN[N_BUTTONS] = {3, 2}; //* pinos de cada botão conectado diretamente ao Arduino
 
 //#define pin13 1 // descomente se você estiver usando o pino 13 (o pino com led), ou comente a linha se não
 byte pin13index = 12; //* coloque o índice do pin 13 do array buttonPin[] se você estiver usando, se não, comente
@@ -63,8 +63,8 @@ unsigned long debounceDelay = 5;    //* o tempo de debounce; aumentar se a saíd
 
 /////////////////////////////////////////////
 // POTENCIOMETROS
-const int N_POTS = 1; //* número total de pots (slide e rotativo)
-const int POT_ARDUINO_PIN[N_POTS] = {A0}; //* pinos de cada pot conectado diretamente ao Arduino
+const int N_POTS = 2; //* número total de pots (slide e rotativo)
+const int POT_ARDUINO_PIN[N_POTS] = {A1, A0}; //* pinos de cada pot conectado diretamente ao Arduino
 
 int potCState[N_POTS] = {0}; // estado atual da porta analogica
 int potPState[N_POTS] = {0}; // estado previo da porta analogica
@@ -82,8 +82,8 @@ unsigned long timer[N_POTS] = {0}; // armazena o tempo que passou desde que o ti
 /////////////////////////////////////////////
 // midi
 byte midiCh = 1; //* Canal MIDI a ser usado
-byte note = 24; //* nota mais baixa a ser usada
-byte cc = 11; //* O mais baixo MIDI CC a ser usado
+byte note = 36; //* nota mais baixa a ser usada
+byte cc = 1; //* O mais baixo MIDI CC a ser usado
 
 /////////////////////////////////////////////
 // SETUP
@@ -285,5 +285,3 @@ void controlChange(byte channel, byte control, byte value) {
 }
 
 #endif
-
-
