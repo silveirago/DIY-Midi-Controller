@@ -36,7 +36,7 @@
 
 // se estiver usando com ATmega328 - Uno, Mega, Nano ...
 #ifdef ATMEGA328
-#include <MIDI.h>
+#include <MIDI.h> // Use a "by Francois Best"
 // MIDI_CREATE_DEFAULT_INSTANCE();
 
 // se estiver usando com ATmega32U4 - Micro, Pro Micro, Leonardo ...
