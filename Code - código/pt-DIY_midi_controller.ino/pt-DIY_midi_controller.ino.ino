@@ -117,7 +117,7 @@ pinMode(BUTTON_ARDUINO_PIN[pin13index], INPUT);
 void loop() {
 
   buttons();
-  potentiometers();
+//  potentiometers();
 
 }
 

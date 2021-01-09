@@ -32,7 +32,7 @@
 
 // if using with ATmega328 - Uno, Mega, Nano...
 #ifdef ATMEGA328
-#include <MIDI.h>
+#include <MIDI.h> // by Francois Best
 //MIDI_CREATE_DEFAULT_INSTANCE();
 
 // if using with ATmega32U4 - Micro, Pro Micro, Leonardo...
@@ -44,8 +44,8 @@
 
 /////////////////////////////////////////////
 // BUTTONS
-const int N_BUTTONS = 2; //*  total numbers of buttons
-const int BUTTON_ARDUINO_PIN[N_BUTTONS] = {2, 3}; //* pins of each button connected straight to the Arduino
+const int N_BUTTONS = 12; //*  total numbers of buttons
+const int BUTTON_ARDUINO_PIN[N_BUTTONS] = {10, 16, 14, 15, 6, 7, 8, 9, 2, 3, 4, 5}; //* pins of each button connected straight to the Arduino
 
 int buttonCState[N_BUTTONS] = {};        // stores the button current value
 int buttonPState[N_BUTTONS] = {};        // stores the button previous value
@@ -55,12 +55,12 @@ byte pin13index = 12; //* put the index of the pin 13 of the buttonPin[] array i
 
 // debounce
 unsigned long lastDebounceTime[N_BUTTONS] = {0};  // the last time the output pin was toggled
-unsigned long debounceDelay = 5;    //* the debounce time; increase if the output flickers
+unsigned long debounceDelay = 50;    //* the debounce time; increase if the output flickers
 
 /////////////////////////////////////////////
 // POTENTIOMETERS
-const int N_POTS = 2; //* total numbers of pots (slide & rotary)
-const int POT_ARDUINO_PIN[N_POTS] = {A1, A0}; //* pins of each pot connected straight to the Arduino
+const int N_POTS = 4; //* total numbers of pots (slide & rotary)
+const int POT_ARDUINO_PIN[N_POTS] = {A3, A2, A1, A0}; //* pins of each pot connected straight to the Arduino
 
 int potCState[N_POTS] = {0}; // Current state of the pot
 int potPState[N_POTS] = {0}; // Previous state of the pot
