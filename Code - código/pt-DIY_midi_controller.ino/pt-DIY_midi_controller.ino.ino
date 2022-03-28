@@ -26,7 +26,7 @@
 // "ATMEGA32U4" se estiver usando com o ATmega32U4 - Micro, Pro Micro, Leonardo ...
 // "TEENSY" se estiver usando uma placa Teensy
 // "DEBUG" se você quer apenas debugar o código no monitor serial
-// você não precisa comentar ou descomentar qualquer biblioteca MIDI abaixo depois de definir sua placa 
+// você não precisa comentar ou descomentar qualquer biblioteca MIDI abaixo depois de definir sua placa
 
 #define DEBUG 1 //* coloque aqui o uC que você está usando, como nas linhas acima seguidas de "1", como "ATMEGA328 1", "DEBUG 1", etc.
 
@@ -49,7 +49,7 @@
 /////////////////////////////////////////////
 // BOTOES
 const int N_BUTTONS = 2; //*  número total de botões
-const int BUTTON_ARDUINO_PIN[N_BUTTONS] = {2,3}; //* pinos de cada botão conectado diretamente ao Arduino
+const int BUTTON_ARDUINO_PIN[N_BUTTONS] = {2, 3}; //* pinos de cada botão conectado diretamente ao Arduino
 
 //#define pin13 1 // descomente se você estiver usando o pino 13 (o pino com led), ou comente a linha se não
 byte pin13index = 12; //* coloque o índice do pin 13 do array buttonPin[] se você estiver usando, se não, comente
@@ -117,7 +117,7 @@ pinMode(BUTTON_ARDUINO_PIN[pin13index], INPUT);
 void loop() {
 
   buttons();
-//  potentiometers();
+  potentiometers();
 
 }
 
