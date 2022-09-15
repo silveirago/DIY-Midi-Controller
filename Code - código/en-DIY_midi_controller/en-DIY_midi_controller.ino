@@ -101,7 +101,7 @@ Serial.println();
     pinMode(BUTTON_ARDUINO_PIN[i], INPUT_PULLUP);
   }
 
-#ifdef pin13 // inicializa o pino 13 como uma entrada
+#ifdef pin13 // initialize pin 13 as an input
 pinMode(BUTTON_ARDUINO_PIN[pin13index], INPUT);
 #endif
 
