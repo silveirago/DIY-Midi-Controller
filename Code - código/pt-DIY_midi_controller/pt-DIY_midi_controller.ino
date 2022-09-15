@@ -1,5 +1,5 @@
 /*
-     Por por Gustavo Silveira, 2019.
+     Por por Gustavo Silveira, 2022.
      - Esta Sketch lê as portas digitais e analógicas do Arduino e envia notas midi e MIDI Control Change
 
      Quer aprender a fazer seus próprios códigos e entender os códigos de outras pessoas?
