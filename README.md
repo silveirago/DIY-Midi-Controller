@@ -4,9 +4,9 @@
 
 This project aims to teach artists, and hobbyists in general, how to build their own MIDI controllers, with little or no prior knowledge in electronics and/or programming.
 
-The "Making of Music with Arduino" is a project created by Gustavo Silveira. Visit the website for more nerd musical related tutorials!
+The "Nerd Musician Pro" is a project created by Gustavo Silveira. Visit the website for more nerd musical related tutorials!
 
-https://nerdmusician.teachable.com/p/making-music-with-arduino
+https://www.musiconerd.com/nerd-musician-pro/
 
 
 ## Português
