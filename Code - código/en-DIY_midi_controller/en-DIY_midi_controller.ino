@@ -1,5 +1,5 @@
 /*
-  Made by Gustavo Silveira, 2019.
+  Made by Gustavo Silveira, 2022.
   - This Sketch reads the Arduino's digital and analog ports and send midi notes and midi control change
 
   http://www.musiconerd.com
