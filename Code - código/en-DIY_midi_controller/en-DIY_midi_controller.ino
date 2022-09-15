@@ -24,7 +24,7 @@
 // "DEBUG" if you just want to debug the code in the serial monitor
 // you don't need to comment or uncomment any MIDI library below after you define your board
 
-#define DEBUG 1 //* put here the uC you are using, like in the lines above followed by "1", like "ATMEGA328 1", "DEBUG 1", etc.
+#define ATMEGA32U4 1 //* put here the uC you are using, like in the lines above followed by "1", like "ATMEGA328 1", "DEBUG 1", etc.
 
 /////////////////////////////////////////////
 // LIBRARIES
@@ -44,8 +44,8 @@
 
 /////////////////////////////////////////////
 // BUTTONS
-const int N_BUTTONS = 12; //*  total numbers of buttons
-const int BUTTON_ARDUINO_PIN[N_BUTTONS] = {10, 16, 14, 15, 6, 7, 8, 9, 2, 3, 4, 5}; //* pins of each button connected straight to the Arduino
+const int N_BUTTONS = 3; //*  total numbers of buttons
+const int BUTTON_ARDUINO_PIN[N_BUTTONS] = {2, 3, 4}; //* pins of each button connected straight to the Arduino
 
 int buttonCState[N_BUTTONS] = {};        // stores the button current value
 int buttonPState[N_BUTTONS] = {};        // stores the button previous value
@@ -59,8 +59,8 @@ unsigned long debounceDelay = 50;    //* the debounce time; increase if the outp
 
 /////////////////////////////////////////////
 // POTENTIOMETERS
-const int N_POTS = 4; //* total numbers of pots (slide & rotary)
-const int POT_ARDUINO_PIN[N_POTS] = {A3, A2, A1, A0}; //* pins of each pot connected straight to the Arduino
+const int N_POTS = 2; //* total numbers of pots (slide & rotary)
+const int POT_ARDUINO_PIN[N_POTS] = {A0, A1}; //* pins of each pot connected straight to the Arduino
 
 int potCState[N_POTS] = {0}; // Current state of the pot
 int potPState[N_POTS] = {0}; // Previous state of the pot
@@ -77,8 +77,8 @@ unsigned long timer[N_POTS] = {0}; // Stores the time that has elapsed since the
 
 /////////////////////////////////////////////
 // MIDI
-byte midiCh = 1; //* MIDI channel to be used
-byte note = 1; //* Lowest note to be used
+byte midiCh = 0; //* MIDI channel to be used
+byte note = 36; //* Lowest note to be used
 byte cc = 1; //* Lowest MIDI CC to be used
 
 /////////////////////////////////////////////
