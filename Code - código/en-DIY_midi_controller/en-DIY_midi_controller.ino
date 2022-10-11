@@ -77,7 +77,7 @@ unsigned long timer[N_POTS] = {0}; // Stores the time that has elapsed since the
 
 /////////////////////////////////////////////
 // MIDI
-byte midiCh = 0; //* MIDI channel to be used
+byte midiCh = 1; //* MIDI channel to be used
 byte note = 36; //* Lowest note to be used
 byte cc = 1; //* Lowest MIDI CC to be used
 
